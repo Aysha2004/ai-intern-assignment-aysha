@@ -26,7 +26,7 @@ Created a scheduled n8n workflow that fetches and processes data from the JSONPl
 ## Part C - Form Integration
 Connected the Part A form to the B1 n8n webhook using JavaScript `fetch()`.
 
-**Demo:** [Part C Screen Recording](./part-c/n8n-and-form-integrated .mp4)
+**Demo:** [Part C Screen Recording](./part-c/n8n-and-form-integrated.mp4)
 
 ## Technologies
 HTML, CSS, JavaScript, n8n, Webhooks, Slack, REST API and GitHub.
