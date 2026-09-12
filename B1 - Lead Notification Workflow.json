@@ -1,0 +1,202 @@
+{
+  "name": "B1 - Lead Notification Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "student-lead",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -112,
+        0
+      ],
+      "id": "fe74aaf8-d83f-4191-89e4-41146d28d5bf",
+      "name": "Webhook",
+      "webhookId": "81378f04-c7e6-44ce-b139-19b172a700b8"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fa7f44c7-dec3-46e8-8b1f-cf1d3af0f218",
+              "name": "name",
+              "value": "={{$json.body.name}}",
+              "type": "string"
+            },
+            {
+              "id": "bae567bb-bbac-4546-b5f3-6510b59da7a6",
+              "name": "email",
+              "value": "={{$json.body.email}}",
+              "type": "string"
+            },
+            {
+              "id": "f1ccaa14-6d6b-4f1b-a1da-dc72f413bc43",
+              "name": "courseLevel",
+              "value": "={{$json.body.courseLevel}}",
+              "type": "string"
+            },
+            {
+              "id": "7b13b413-4a3c-419f-9f97-8bcc125bd3a3",
+              "name": "message",
+              "value": "={{$json.body.message}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        160,
+        0
+      ],
+      "id": "4a4b21d8-1314-4000-af63-5be76d481b5c",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "d5296254-758f-48b3-af59-5bed20840c39",
+              "leftValue": "={{$json.courseLevel}}",
+              "rightValue": "PG",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "99c4c517-2d1c-4e5d-9be5-8a56352653bc",
+              "leftValue": "={{$json.courseLevel}}",
+              "rightValue": "PhD",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        384,
+        0
+      ],
+      "id": "44efd4fe-6158-4ba0-a481-9e71a601e5bc",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0C1G91B5RA",
+          "mode": "list",
+          "cachedResultName": "all-ayshas-ltd"
+        },
+        "text": "=New Postgraduate Lead  \nName: {{$json.name}} \nEmail: {{$json.email}} \nCourse Level: {{$json.courseLevel}}\nMessage: {{$json.message}}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.7,
+      "position": [
+        672,
+        -96
+      ],
+      "id": "4cb0e8df-dd85-4ec4-b206-e492449280aa",
+      "name": "Send a message",
+      "webhookId": "28cefead-e4ec-4c62-97a6-cf5fd9808eab",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "h8z2fngRth5Xx2Sh",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        672,
+        96
+      ],
+      "id": "a194f318-535b-42ab-a09d-1a9fb95b4db3",
+      "name": "No Operation, do nothing"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "57309e2c-db3d-40d3-a7aa-2df42e12102e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "677cd7566596114e37d3a327b8bbeda36db5270c4a268e0f922c971a1dd39a7d"
+  },
+  "nodeGroups": [],
+  "id": "G5JrCdJAsiB62414",
+  "tags": []
+}
