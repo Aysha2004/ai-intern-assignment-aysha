@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Lead Capture Form</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7f6;
+            color: #222;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 650px;
+            margin: 40px auto;
+        }
+
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2f7d68;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: normal;
+        }
+
+        .radio-option input {
+            width: auto;
+        }
+
+        .error {
+            color: #d93025;
+            font-size: 13px;
+            margin-top: 5px;
+            min-height: 16px;
+        }
+
+        .char-counter {
+            text-align: right;
+            color: #666;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 6px;
+            background: #2f7d68;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #256653;
+        }
+
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            color: #256029;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="form-card">
+
+            <h1>Student Lead Capture</h1>
+
+            <p class="subtitle">
+                Tell us about yourself and your study preferences.
+            </p>
+
+            <form id="studentForm" novalidate>
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                    >
+
+                    <div class="error" id="nameError"></div>
+                </div>
+
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email *</label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                    >
+
+                    <div class="error" id="emailError"></div>
+                </div>
+
+
+                <!-- Country -->
+                <div class="form-group">
+                    <label for="country">Country *</label>
+
+                    <select id="country" name="country">
+                        <option value="">Select your country</option>
+                        <option value="India">India</option>
+                        <option value="USA">USA</option>
+                        <option value="UK">UK</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Other">Other</option>
+                    </select>
+
+                    <div class="error" id="countryError"></div>
+                </div>
+
+
+                <!-- Course Level -->
+                <div class="form-group">
+
+                    <label>Course Level *</label>
+
+                    <div class="radio-group">
+
+                        <label class="radio-option">
+                            <input
+                                type="radio"
+                                name="courseLevel"
+                                value="UG"
+                            >
+                            UG
+                        </label>
+
+                        <label class="radio-option">
+                            <input
+                                type="radio"
+                                name="courseLevel"
+                                value="PG"
+                            >
+                            PG
+                        </label>
+
+                        <label class="radio-option">
+                            <input
+                                type="radio"
+                                name="courseLevel"
+                                value="PhD"
+                            >
+                            PhD
+                        </label>
+
+                    </div>
+
+                    <div class="error" id="courseLevelError"></div>
+
+                </div>
+
+
+                <!-- Preferred University -->
+                <div class="form-group">
+
+                    <label for="university">
+                        Preferred University *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="university"
+                        name="university"
+                        placeholder="Enter preferred university"
+                    >
+
+                    <div class="error" id="universityError"></div>
+
+                </div>
+
+
+                <!-- Message -->
+                <div class="form-group">
+
+                    <label for="message">Message *</label>
+
+                    <textarea
+                        id="message"
+                        name="message"
+                        maxlength="300"
+                        placeholder="Tell us about your study plans..."
+                    ></textarea>
+
+                    <div class="char-counter">
+                        <span id="charCount">0</span>/300
+                    </div>
+
+                    <div class="error" id="messageError"></div>
+
+                </div>
+
+
+                <button type="submit">
+                    Submit Application
+                </button>
+
+            </form>
+
+
+            <div
+                class="success-message"
+                id="successMessage"
+            >
+                Thank you! Your information has been submitted successfully.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // Get references to the form elements
+        const form = document.getElementById("studentForm");
+        const message = document.getElementById("message");
+        const charCount = document.getElementById("charCount");
+        const successMessage = document.getElementById("successMessage");
+
+
+        // Live character counter
+        message.addEventListener("input", function () {
+
+            charCount.textContent = message.value.length;
+
+        });
+
+
+        // Form submission
+        form.addEventListener("submit", function (event) {
+
+            // Prevent page reload
+            event.preventDefault();
+
+
+            // Clear previous errors
+            document.querySelectorAll(".error").forEach(function (error) {
+                error.textContent = "";
+            });
+
+
+            // Get form values
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const country = document.getElementById("country").value;
+            const university = document.getElementById("university").value.trim();
+            const messageValue = message.value.trim();
+
+            const courseLevelElement =
+                document.querySelector('input[name="courseLevel"]:checked');
+
+
+            const courseLevel =
+                courseLevelElement ? courseLevelElement.value : "";
+
+
+            let isValid = true;
+
+
+            // Validate name
+            if (name === "") {
+
+                document.getElementById("nameError").textContent =
+                    "Full name is required.";
+
+                isValid = false;
+            }
+
+
+            // Validate email
+            if (email === "") {
+
+                document.getElementById("emailError").textContent =
+                    "Email is required.";
+
+                isValid = false;
+
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+                document.getElementById("emailError").textContent =
+                    "Please enter a valid email address.";
+
+                isValid = false;
+            }
+
+
+            // Validate country
+            if (country === "") {
+
+                document.getElementById("countryError").textContent =
+                    "Please select your country.";
+
+                isValid = false;
+            }
+
+
+            // Validate course level
+            if (courseLevel === "") {
+
+                document.getElementById("courseLevelError").textContent =
+                    "Please select a course level.";
+
+                isValid = false;
+            }
+
+
+            // Validate university
+            if (university === "") {
+
+                document.getElementById("universityError").textContent =
+                    "Preferred university is required.";
+
+                isValid = false;
+            }
+
+
+            // Validate message
+            if (messageValue === "") {
+
+                document.getElementById("messageError").textContent =
+                    "Message is required.";
+
+                isValid = false;
+
+            } else if (messageValue.length > 300) {
+
+                document.getElementById("messageError").textContent =
+                    "Message cannot exceed 300 characters.";
+
+                isValid = false;
+            }
+
+
+            // Stop if validation failed
+            if (!isValid) {
+                return;
+            }
+
+
+            // Create JSON object
+            const formData = {
+                name: name,
+                email: email,
+                country: country,
+                courseLevel: courseLevel,
+                university: university,
+                message: messageValue
+            };
+
+
+            // Log JSON data to browser console
+            console.log(
+                "Student Lead:",
+                JSON.stringify(formData, null, 2)
+            );
+
+
+            // Show success message
+            successMessage.style.display = "block";
+
+
+            // Reset form
+            form.reset();
+
+
+            // Reset character counter
+            charCount.textContent = "0";
+
+        });
+
+    </script>
+
+</body>
+</html>
