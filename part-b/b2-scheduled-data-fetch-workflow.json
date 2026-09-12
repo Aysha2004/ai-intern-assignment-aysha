@@ -1,0 +1,155 @@
+{
+  "name": "B2 - Scheduled Data Fetch Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -336,
+        80
+      ],
+      "id": "33585215-3a64-468b-82dd-e82cadfbb8e0",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://jsonplaceholder.typicode.com/users",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -80,
+        -80
+      ],
+      "id": "5d38a0d2-385c-4370-a907-53c7027ca509",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nreturn items.map(item => ({\n  json: {\n    name: item.json.name || \"\",\n    email: item.json.email || \"\",\n    city: item.json.address?.city || \"\",\n    company: item.json.company?.name || \"\"\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        112
+      ],
+      "id": "b46f0934-49e8-43b6-9656-48281c69d700",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "23ec740a-9d2d-49f3-8c0a-7d132802ca1f",
+              "name": "=name",
+              "value": "={{$json.name}}",
+              "type": "string"
+            },
+            {
+              "id": "8e15e080-d069-4d8c-8ebf-57583b7d4a13",
+              "name": "=email",
+              "value": "={{$json.email}}",
+              "type": "string"
+            },
+            {
+              "id": "3ff8abc0-3421-4269-8f65-ba754ad96d2d",
+              "name": "=city",
+              "value": "={{$json.city}}",
+              "type": "string"
+            },
+            {
+              "id": "794fbd42-7400-4973-a2c8-b719f2891514",
+              "name": "=company",
+              "value": "={{$json.company}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        464,
+        -80
+      ],
+      "id": "7efa445b-c36b-4b76-96a2-5e34553e5215",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {
+    "Schedule Trigger": [
+      {
+        "json": {
+          "name": "First item",
+          "code": 1
+        }
+      },
+      {
+        "json": {
+          "name": "Second item",
+          "code": 2
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "939f0cc6-99fc-44d6-9c29-bf78f9032957",
+  "meta": {
+    "instanceId": "677cd7566596114e37d3a327b8bbeda36db5270c4a268e0f922c971a1dd39a7d"
+  },
+  "nodeGroups": [],
+  "id": "csOSHzOH9wLRzLZL",
+  "tags": []
+}
